@@ -78,7 +78,7 @@ pipeline {
             }
         }
 
-        stage('Deploy prod') {
+        stage('Deploy production') {
             agent any
             when { expression { env.GIT_BRANCH == 'origin/master' } }
             steps {
