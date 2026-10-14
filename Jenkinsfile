@@ -93,4 +93,14 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            slackSend (color: 'good', message: "Pipeline completed successfully!")
+        }
+
+        failure {
+            slackSend (color: 'danger',message: "Pipeline failed!")
+        }
+    }
 }
