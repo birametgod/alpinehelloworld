@@ -1,4 +1,4 @@
-@Library('birametgod-shared-library')
+@Library('birametgod-shared-library') _
 pipeline {
     environment {
        DOCKER_USER = 'birametgod'
