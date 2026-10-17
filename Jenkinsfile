@@ -1,3 +1,4 @@
+@Library('birametgod-shared-library')
 pipeline {
     environment {
        DOCKER_USER = 'birametgod'
@@ -95,12 +96,10 @@ pipeline {
     }
 
     post {
-        success {
-            slackSend (color: 'good', message: "Pipeline completed successfully! ")
-        }
-
-        failure {
-            slackSend (color: 'danger', message: "Pipeline failed!")
+        always {
+            script {
+                slackNotifier currentBuild.result 
+            }
         }
     }
 }
