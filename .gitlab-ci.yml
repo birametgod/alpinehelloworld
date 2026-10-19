@@ -1,0 +1,29 @@
+stages:
+  - linter
+  - build
+
+linter-flake8:
+  stage: linter
+  image: python:3.11-alpine
+  script:
+    - pip install flake8
+    - flake8 --extend-ignore=E501,E303 ./webapp/
+  
+linter-hadolint:
+  stage: linter
+  image: hadolint/hadolint:v2.14.0-alpine@sha256:7aba693c1442eb31c0b015c129697cb3b6cb7da589d85c7562f9deb435a6657c
+  script:
+    - hadolint Dockerfile
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
+  script:
+    - docker build -t alpine-hello-world .
+    - docker save alpine-hello-world > alpine-hello-world.tar
+  artifacts:
+    paths:
+      - alpine-hello-world.tar
